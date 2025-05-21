@@ -1,6 +1,6 @@
 {
-    "name": "mindef/demo",
-    "description": "Proyecto MVC demo",
+    "name": "app01/amb",
+    "description": "tarea para practicar crud",
     "type": "project",
     "config": {
         "platform-check": false
