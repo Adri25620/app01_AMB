@@ -21,7 +21,7 @@
           <a class="nav-link active" aria-current="page" href="/app01_AMB/productos">Productos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Otro</a>
+          <a class="nav-link" href="/app01_AMB/categorias">Categorias</a>
         </li>
         
       </ul>
@@ -43,7 +43,7 @@
         <div class="row justify-content-center text-center">
             <div class="col-12">
                 <p style="font-size:xx-small; font-weight: bold;">
-                        Comando de Informática y Tecnología, <?= date('Y') ?> &copy;
+                        Subteniente Caballería Martínez Barrientos, <?= date('Y') ?> &copy;
                 </p>
             </div>
         </div>

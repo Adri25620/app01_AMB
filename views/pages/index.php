@@ -11,7 +11,7 @@
         <p class="fs-5 text-secondary mb-4">
           Organiza tu lista, revisa tus productos y domina el mercado como la reina que eres 👑🛒. ¡Haz que tu súper sea súper!
         </p>
-        <a href="#registro" class="btn btn-success btn-lg px-4 shadow-sm">
+        <a href="/app01_AMB/productos" class="btn btn-success btn-lg px-4 shadow-sm">
           📋 Registrar mis productos
         </a>
       </div>
