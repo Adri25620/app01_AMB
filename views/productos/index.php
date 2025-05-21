@@ -24,6 +24,9 @@
                                 <label for="pro_categoria" class="form-label">Seleccione la categoria</label>
                                 <select name="pro_categoria" id="" class="form-select">
                                     <option value="Categorias" selected disabled>Seleccione...</option>
+                                    <?php foreach($categorias as $c): ?>
+                                        <option value="<?= $c->id ?>"><?= $c->nombre ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             
 

@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class Usuarios extends ActiveRecord
+class Productos extends ActiveRecord
 {
 
     public static $tabla = 'productos';
