@@ -345,7 +345,8 @@ const EliminarProductos = async (e) => {
                     showConfirmButton: true,
                 });
                 
-                BuscarProductos();
+               BuscarProductos();
+               BuscarProductosComprados();
             } else {
                 await Swal.fire({
                     position: "center",
@@ -365,7 +366,7 @@ const EliminarProductos = async (e) => {
 
 
 const ProductoComprado = async (e) => {
-    const idPro = e.currentTarget.dataset.id; // AGREGAR ESTA LÍNEA
+    const idPro = e.currentTarget.dataset.id;
 
     const AlertaConfirmarCompra = await Swal.fire({
         position: "center",
@@ -380,7 +381,7 @@ const ProductoComprado = async (e) => {
     });
 
     if (AlertaConfirmarCompra.isConfirmed) {
-        const url = `/app01_AMB/productos/comprado?id=${idPro}`; // AGREGAR EL ID AQUÍ
+        const url = `/app01_AMB/productos/comprado?id=${idPro}`;
         const config = {
             method: 'GET'
         }
@@ -399,8 +400,8 @@ const ProductoComprado = async (e) => {
                     showConfirmButton: true,
                 });
                 
-                BuscarProductos(); // Actualizar tabla de pendientes
-                BuscarProductosComprados(); // Actualizar tabla de comprados
+                BuscarProductos();
+                BuscarProductosComprados();
             } else {
                 await Swal.fire({
                     position: "center",

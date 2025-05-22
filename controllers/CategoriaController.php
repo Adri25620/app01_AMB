@@ -22,6 +22,7 @@ class CategoriaController extends ActiveRecord
         getHeadersApi();
 
         $_POST['cat_nom'] = htmlspecialchars($_POST['cat_nom']);
+        $_POST['cat_nom'] = ucwords(strtolower($_POST['cat_nom']));
 
         $cantidad_nombre = strlen($_POST['cat_nom']);
         if ($cantidad_nombre > 2) {
@@ -89,6 +90,7 @@ class CategoriaController extends ActiveRecord
 
         $id = $_POST['cat_id'];
         $_POST['cat_nom'] = htmlspecialchars($_POST['cat_nom']);
+        $_POST['cat_nom'] = ucwords(strtolower($_POST['cat_nom']));
 
         $cantidad_nombre = strlen($_POST['cat_nom']);
         if ($cantidad_nombre > 2) {

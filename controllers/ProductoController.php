@@ -30,6 +30,7 @@ class ProductoController extends ActiveRecord
         getHeadersApi();
 
         $_POST['pro_nombre'] = htmlspecialchars($_POST['pro_nombre']);
+        $_POST['pro_nombre'] = ucwords(strtolower($_POST['pro_nombre']));
 
         $cantidad_nombres = strlen($_POST['pro_nombre']);
 
@@ -39,6 +40,19 @@ class ProductoController extends ActiveRecord
             echo json_encode([
                 'codigo' => 0,
                 'mensaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
+            ]);
+            return;
+        }
+
+        $nombreProducto = $_POST['pro_nombre'];
+        $sql = "SELECT COUNT(*) as total FROM productos WHERE LOWER(pro_nombre) = LOWER('$nombreProducto') AND pro_situacion = 1 AND pro_comprado = 0";
+        $resultado = self::fetchArray($sql);
+
+        if ($resultado[0]['total'] > 0) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Ya existe un producto con el nombre "' . $nombreProducto . '". Por favor ingresá un nombre diferente.'
             ]);
             return;
         }
@@ -65,6 +79,7 @@ class ProductoController extends ActiveRecord
         }
 
         $_POST['pro_prioridad'] = htmlspecialchars($_POST['pro_prioridad']);
+        $_POST['pro_prioridad'] = ucwords(strtolower($_POST['pro_prioridad']));
 
         $prioridad = $_POST['pro_prioridad'];
 
@@ -117,7 +132,15 @@ class ProductoController extends ActiveRecord
 
             $sql = "SELECT cat_nom,* FROM productos
             JOIN categorias ON pro_categoria = cat_id 
-            WHERE pro_situacion = 1 AND pro_comprado = 0";
+            WHERE pro_situacion = 1 AND pro_comprado = 0
+            ORDER BY 
+            CASE pro_prioridad 
+                WHEN 'A' THEN 1
+                WHEN 'M' THEN 2
+                WHEN 'B' THEN 3
+            ELSE 4
+            END ASC,
+          pro_nombre ASC";;
             $data = self::fetchArray($sql);
 
             http_response_code(200);
@@ -170,6 +193,7 @@ class ProductoController extends ActiveRecord
 
         $id = $_POST['pro_id'];
         $_POST['pro_nombre'] = htmlspecialchars($_POST['pro_nombre']);
+        $_POST['pro_nombre'] = ucwords(strtolower($_POST['pro_nombre']));
 
         $cantidad_nombres = strlen($_POST['pro_nombre']);
 
@@ -179,6 +203,19 @@ class ProductoController extends ActiveRecord
             echo json_encode([
                 'codigo' => 0,
                 'mensaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
+            ]);
+            return;
+        }
+
+        $nombreProducto = $_POST['pro_nombre'];
+        $sql = "SELECT COUNT(*) as total FROM productos WHERE LOWER(pro_nombre) = LOWER('$nombreProducto') AND pro_situacion = 1 AND pro_id != $id AND pro_comprado = 0";
+        $resultado = self::fetchArray($sql);
+
+        if ($resultado[0]['total'] > 0) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Ya existe otro producto con el nombre "' . $nombreProducto . '". Por favor ingresá un nombre diferente.'
             ]);
             return;
         }
@@ -205,6 +242,7 @@ class ProductoController extends ActiveRecord
         }
 
         $_POST['pro_prioridad'] = htmlspecialchars($_POST['pro_prioridad']);
+        $_POST['pro_prioridad'] = ucwords(strtolower($_POST['pro_prioridad']));
 
         $prioridad = $_POST['pro_prioridad'];
 

@@ -47,7 +47,7 @@ class Productos extends ActiveRecord
 
     public static function ProductoComprado($id){
 
-        $sql = "UPDATE productos SET pro_comprado = 1 WHERE pro_id = $id";
+        $sql = "UPDATE productos SET pro_comprado = 1 WHERE pro_id = $id AND pro_situacion = 1";
         return self::SQL($sql);
     }
 }
