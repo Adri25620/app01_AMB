@@ -11,7 +11,7 @@ create table productos(
     pro_nombre varchar(100),
     pro_cantidad integer,
     pro_categoria integer,
-    pro_prioridad integer,
+    pro_prioridad varchar(50),
     pro_comprado smallint default 0,
     pro_situacion char(1)
 );

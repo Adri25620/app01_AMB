@@ -38,24 +38,32 @@ class ProductoController extends ActiveRecord
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mennsaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
+                'mensaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
             ]);
             return;
         }
 
         $_POST['pro_cantidad'] = filter_var($_POST['pro_cantidad'], FILTER_VALIDATE_INT);
 
-        if (strlen($_POST['pro_cantidad']) >= 0) {
+        if ($_POST['pro_cantidad'] === false || $_POST['pro_cantidad'] <= 0) {
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mennsaje' => 'Debe de ingresar un numero mayor a 0'
+                'mensaje' => 'Debe de ingresar un numero mayor a 0'
             ]);
             return;
         }
 
-        $_POST['pro_categoria'] = htmlspecialchars($_POST['pro_categoria']);
-       
+        $_POST['pro_categoria'] = filter_var($_POST['pro_categoria'], FILTER_VALIDATE_INT);
+        if ($_POST['pro_categoria'] === false || $_POST['pro_categoria'] <= 0) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Debe seleccionar una categoría válida'
+            ]);
+            return;
+        }
+
         $_POST['pro_prioridad'] = htmlspecialchars($_POST['pro_prioridad']);
 
         $prioridad = $_POST['pro_prioridad'];
@@ -76,7 +84,7 @@ class ProductoController extends ActiveRecord
                 ]);
 
                 $crear = $data->crear();
-            
+
 
                 http_response_code(200);
                 echo json_encode([
@@ -107,7 +115,9 @@ class ProductoController extends ActiveRecord
 
         try {
 
-            $sql = "SELECT * FROM productos WHERE pro_situacion = 1 AND pro_compra = 0";
+            $sql = "SELECT cat_nom,* FROM productos
+            JOIN categorias ON pro_categoria = cat_id 
+            WHERE pro_situacion = 1 AND pro_comprado = 0";
             $data = self::fetchArray($sql);
 
             http_response_code(200);
@@ -131,7 +141,9 @@ class ProductoController extends ActiveRecord
     {
         try {
 
-            $sql = "SELECT * FROM productos WHERE pro_situacion = 1 AND pro_compra = 1";
+            $sql = "SELECT cat_nom,* FROM productos
+            JOIN categorias ON pro_categoria = cat_id 
+            WHERE pro_situacion = 1 AND pro_comprado = 1";
             $data = self::fetchArray($sql);
 
             http_response_code(200);
@@ -151,7 +163,8 @@ class ProductoController extends ActiveRecord
     }
 
 
-    public static function modificarAPI() {
+    public static function modificarAPI()
+    {
 
         getHeadersApi();
 
@@ -165,14 +178,14 @@ class ProductoController extends ActiveRecord
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mennsaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
+                'mensaje' => 'La cantidad de digitos que debe de contener el nombre debe de ser mayor a dos'
             ]);
             return;
         }
 
         $_POST['pro_cantidad'] = filter_var($_POST['pro_cantidad'], FILTER_VALIDATE_INT);
 
-        if (strlen($_POST['pro_cantidad']) >= 0) {
+        if ($_POST['pro_cantidad'] === false || $_POST['pro_cantidad'] <= 0) {
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
@@ -181,8 +194,16 @@ class ProductoController extends ActiveRecord
             return;
         }
 
-        $_POST['pro_categoria'] = htmlspecialchars($_POST['pro_categoria']);
-       
+        $_POST['pro_categoria'] = filter_var($_POST['pro_categoria'], FILTER_VALIDATE_INT);
+        if ($_POST['pro_categoria'] === false || $_POST['pro_categoria'] <= 0) {
+            http_response_code(400);
+            echo json_encode([
+                'codigo' => 0,
+                'mensaje' => 'Debe seleccionar una categoría válida'
+            ]);
+            return;
+        }
+
         $_POST['pro_prioridad'] = htmlspecialchars($_POST['pro_prioridad']);
 
         $prioridad = $_POST['pro_prioridad'];
@@ -226,7 +247,7 @@ class ProductoController extends ActiveRecord
     }
 
 
-    public static function EliminarAPI()
+    public static function eliminarAPI()
     {
         try {
 
@@ -253,21 +274,37 @@ class ProductoController extends ActiveRecord
     public static function compradoAPI()
     {
         try {
-
             $id = filter_var($_GET['id'], FILTER_SANITIZE_NUMBER_INT);
+
+            if (!$id || $id <= 0) {
+                http_response_code(400);
+                echo json_encode([
+                    'codigo' => 0,
+                    'mensaje' => 'ID de producto inválido'
+                ]);
+                return;
+            }
 
             $ejecutar = Productos::ProductoComprado($id);
 
-            http_response_code(200);
-            echo json_encode([
-                'codigo' => 1,
-                'mensaje' => 'El registro se actualizo a comprado'
-            ]);
+            if ($ejecutar) {
+                http_response_code(200);
+                echo json_encode([
+                    'codigo' => 1,
+                    'mensaje' => 'El producto se marcó como comprado correctamente'
+                ]);
+            } else {
+                http_response_code(400);
+                echo json_encode([
+                    'codigo' => 0,
+                    'mensaje' => 'No se pudo actualizar el producto'
+                ]);
+            }
         } catch (Exception $e) {
             http_response_code(400);
             echo json_encode([
                 'codigo' => 0,
-                'mensaje' => 'Error al cambiar',
+                'mensaje' => 'Error al cambiar el estado del producto',
                 'detalle' => $e->getMessage(),
             ]);
         }

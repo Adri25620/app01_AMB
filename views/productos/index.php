@@ -12,50 +12,50 @@
                         <input type="hidden" id="pro_id" name="pro_id">
 
                         <div class="row mb-3 justify-content-center">
-                            
-                                <label for="pro_nombre" class="form-label">Ingrese el nombre del prodcuto:</label>
-                                <input type="text" class="form-control" id="pro_nombre" name="pro_nombre" placeholder="Ingrese el nombres...">
-                            
-                            
-                                <label for="pro_cantidad" class="form-label">Ingrese la cantidad de productos:</label>
-                                <input type="text" class="form-control" id="pro_cantidad" name="pro_cantidad" placeholder="Ingrese la cantidad...">
-                            
 
-                                <label for="pro_categoria" class="form-label">Seleccione la categoria</label>
-                                <select name="pro_categoria" id="" class="form-select">
-                                    <option value="Categorias" selected disabled>Seleccione...</option>
-                                    <?php foreach($categorias as $c): ?>
+                            <label for="pro_nombre" class="form-label">Ingrese el nombre del prodcuto:</label>
+                            <input type="text" class="form-control" id="pro_nombre" name="pro_nombre" placeholder="Ingrese el nombres...">
+
+
+                            <label for="pro_cantidad" class="form-label">Ingrese la cantidad de productos:</label>
+                            <input type="number" class="form-control" id="pro_cantidad" name="pro_cantidad" placeholder="Ingrese la cantidad...">
+
+
+                            <label for="pro_categoria" class="form-label">Seleccione la categoria</label>
+                            <select name="pro_categoria" id="pro_categoria" class="form-select">
+                                <option value="" selected disabled>Seleccione...</option>
+                                <?php foreach ($categorias as $c): ?>
+                                    <?php if ($c->cat_situacion == 1): ?>
                                         <option value="<?= $c->cat_id ?>"><?= $c->cat_nom ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            
-                            
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </select>
 
-                                <label for="pro_prioridad" class="form-label">Seleccione la prioridad</label>
-                                <select name="pro_prioridad" id="" class="form-select">
-                                    <option value="Prioridad" selected disabled>Seleccione...</option>
-                                    <option value="A">Alta</option>
-                                    <option value="M">Media</option>
-                                    <option value="B">Baja</option>
-                                </select>
-                            
+                            <label for="pro_prioridad" class="form-label">Seleccione la prioridad</label>
+                            <select name="pro_prioridad" id="pro_prioridad" class="form-select">
+                                <option value="Prioridad" selected disabled>Seleccione...</option>
+                                <option value="A">Alta</option>
+                                <option value="M">Media</option>
+                                <option value="B">Baja</option>
+                            </select>
+
                             <div class="row justify-content-center mt-5">
-                            <div class="col-auto">
-                                <button class="btn btn-success" type="submit" id="BtnGuardar">
-                                    Guardar
-                                </button>
+                                <div class="col-auto">
+                                    <button class="btn btn-success" type="submit" id="BtnGuardar">
+                                        Guardar
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-warning d-none" type="button" id="BtnModificar">
+                                        Modificar
+                                    </button>
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-dark" type="reset" id="BtnLimpiar">
+                                        Limpiar
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <button class="btn btn-warning d-none" type="button" id="BtnModificar">
-                                    Modificar
-                                </button>
-                            </div>
-                            <div class="col-auto">
-                                <button class="btn btn-dark" type="reset" id="BtnLimpiar">
-                                    Limpiar
-                                </button>
-                            </div>
-                        </div>
                         </div>
                     </form>
 
