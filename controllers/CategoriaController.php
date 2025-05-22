@@ -15,20 +15,21 @@ class CategoriaController extends ActiveRecord
         $router->render('categorias/index', []);
     }
 
+
     public static function guardarAPI()
     {
 
         getHeadersApi();
 
-        $_POST['cat_nombre'] = htmlspecialchars($_POST['cat_nombre']);
+        $_POST['cat_nom'] = htmlspecialchars($_POST['cat_nom']);
 
-        $cantidad_nombre = strlen($_POST['cat_nombre']);
+        $cantidad_nombre = strlen($_POST['cat_nom']);
         if ($cantidad_nombre > 2) {
 
             try {
 
                 $data = new Categorias([
-                    'cat_nombre' => $_POST['cat_nombre'],
+                    'cat_nom' => $_POST['cat_nom'],
                     'cat_situacion' => 1
                 ]);
 
@@ -87,16 +88,16 @@ class CategoriaController extends ActiveRecord
         getHeadersApi();
 
         $id = $_POST['cat_id'];
-        $_POST['cat_nombre'] = htmlspecialchars($_POST['cat_nombre']);
+        $_POST['cat_nom'] = htmlspecialchars($_POST['cat_nom']);
 
-        $cantidad_nombre = strlen($_POST['cat_nombre']);
+        $cantidad_nombre = strlen($_POST['cat_nom']);
         if ($cantidad_nombre > 2) {
 
             try {
 
                 $data = Categorias::find($id);
                 $data->sincronizar([
-                    'cat_nombre' => $_POST['cat_nombre'],
+                    'cat_nom' => $_POST['cat_nom'],
                     'cat_situacion' => 1
                 ]);
                 $data->actualizar();

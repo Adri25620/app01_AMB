@@ -13,8 +13,8 @@
 
                         <div class="row mb-3 justify-content-center">
 
-                            <label for="cat_nombre" class="form-label">Ingrese el nombre de la categoria:</label>
-                            <input type="text" class="form-control" id="cat_nombre" name="cat_nombre" placeholder="Ingrese la categoria...">
+                            <label for="cat_nom" class="form-label">Ingrese el nombre de la categoria:</label>
+                            <input type="text" class="form-control" id="cat_nom" name="cat_nom" placeholder="Ingrese la categoria...">
 
                             <div class="row justify-content-center mt-5">
                                 <div class="col-auto">

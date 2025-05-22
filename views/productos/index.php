@@ -25,7 +25,7 @@
                                 <select name="pro_categoria" id="" class="form-select">
                                     <option value="Categorias" selected disabled>Seleccione...</option>
                                     <?php foreach($categorias as $c): ?>
-                                        <option value="<?= $c->id ?>"><?= $c->nombre ?></option>
+                                        <option value="<?= $c->cat_id ?>"><?= $c->cat_nom ?></option>
                                     <?php endforeach; ?>
                                 </select>
                             

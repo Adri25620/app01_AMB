@@ -61,7 +61,7 @@ const GuardarCategoria = async (event) => {
             });
 
             limpiarTodo();
-            BuscarUsuarios();
+            BuscarCategorias();
 
         } else {
 
@@ -82,7 +82,7 @@ const GuardarCategoria = async (event) => {
 }
 
 
-const BuscarUsuarios = async () => {
+const BuscarCategorias = async () => {
 
     const url = '/app01_AMB/categorias/buscarAPI';
     const config = {
@@ -142,11 +142,11 @@ const datatable = new DataTable('#TablaCategorias', {
     columns: [
         {
             title: 'No.',
-            data: 'us_id',
+            data: 'cat_id',
             width: '%',
             render: (data, type, row, meta) => meta.row + 1
         },
-        { title: 'Nombre', data: 'cat_nombre' },
+        { title: 'Nombre', data: 'cat_nom' },
         {
             title: 'Acciones',
             data: 'cat_id',
@@ -157,7 +157,7 @@ const datatable = new DataTable('#TablaCategorias', {
                  <div class='d-flex justify-content-center'>
                      <button class='btn btn-warning modificar mx-1' 
                          data-id="${data}" 
-                         data-nombre="${row.cat_nombre}"    
+                         data-nom="${row.cat_nom}"    
                          <i class='bi bi-pencil-square me-1'></i> Modificar
                      </button>
                      <button class='btn btn-danger eliminar mx-1' 
@@ -171,7 +171,148 @@ const datatable = new DataTable('#TablaCategorias', {
 });
 
 
+const ModificarCategoria = async (event) => {
 
-BuscarUsuarios();
+    event.preventDefault();
+    BtnModificar.disabled = true;
+
+    if (!validarFormulario(FormCategorias, [''])) {
+        Swal.fire({
+            position: "center",
+            icon: "info",
+            title: "FORMULARIO INCOMPLETO",
+            text: "Debe de validar todos los campos",
+            showConfirmButton: true,
+        });
+        BtnGuardar.disabled = false;
+    }
+
+    const body = new FormData(FormCategorias);
+
+    const url = '/app01_AMB/categorias/modificarAPI';
+    const config = {
+        method: 'POST',
+        body
+    }
+
+    try {
+
+        const respuesta = await fetch(url, config);
+        const datos = await respuesta.json();
+        const { codigo, mensaje } = datos
+
+        if (codigo == 1) {
+
+            await Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Exito",
+                text: mensaje,
+                showConfirmButton: true,
+            });
+
+            limpiarTodo();
+            BuscarCategorias();
+
+        } else {
+
+            await Swal.fire({
+                position: "center",
+                icon: "info",
+                title: "Error",
+                text: mensaje,
+                showConfirmButton: true,
+            });
+
+        }
+
+
+    } catch (error) {
+        console.log(error)
+    }
+    BtnModificar.disabled = false;
+
+}
+
+
+const llenarFormulario = (event) => {
+
+    const datos = event.currentTarget.dataset
+
+    document.getElementById('cat_id').value = datos.id
+    document.getElementById('cat_nom').value = datos.nom
+
+    BtnGuardar.classList.add('d-none');
+    BtnModificar.classList.remove('d-none');
+
+    window.scrollTo({
+    top: 0
+});
+}
+
+
+const EliminarCategorias = async (e) => {
+
+    const idCat = e.currentTarget.dataset.id
+
+    const AlertaConfirmarEliminar = await Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "¿Desea ejecutar esta acción?",
+        text: 'Esta completamente seguro que desea eliminar este registro',
+        showConfirmButton: true,
+        confirmButtonText: 'Si, Eliminar',
+        confirmButtonColor: 'red',
+        cancelButtonText: 'No, Cancelar',
+        showCancelButton: true
+    });
+
+    if (AlertaConfirmarEliminar.isConfirmed) {
+
+        const url = `/app01_AMB/categorias/eliminar?id=${idCat}`;
+        const config = {
+            method: 'GET'
+        }
+
+        try {
+
+            const consulta = await fetch(url, config);
+            const respuesta = await consulta.json();
+            const { codigo, mensaje } = respuesta;
+
+            if (codigo == 1) {
+
+                await Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Exito",
+                    text: mensaje,
+                    showConfirmButton: true,
+                });
+                
+                BuscarCategorias();
+            } else {
+                await Swal.fire({
+                    position: "center",
+                    icon: "error",
+                    title: "Error",
+                    text: mensaje,
+                    showConfirmButton: true,
+                });
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+}
+
+
+
+BuscarCategorias();
 FormCategorias.addEventListener('submit', GuardarCategoria);
 BtnLimpiar.addEventListener('click', limpiarTodo);
+BtnModificar.addEventListener('click', ModificarCategoria);
+datatable.on('click', '.modificar', llenarFormulario);
+datatable.on('click', '.eliminar', EliminarCategorias);
