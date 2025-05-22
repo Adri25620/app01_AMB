@@ -29,6 +29,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             
+                            
 
                                 <label for="pro_prioridad" class="form-label">Seleccione la prioridad</label>
                                 <select name="pro_prioridad" id="" class="form-select">
@@ -71,6 +72,21 @@
 
                 <div class="table-responsive p-2">
                     <table class="table table-striped table-hover table-bordered w-100 table-sm" id="TablaProductos">
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center p-3">
+    <div class="col-lg-10">
+        <div class="card custom-card shadow-lg" style="border-radius: 10px; border: 1px solid #007bff;">
+            <div class="card-body p-3">
+                <h3 class="text-center">PRODUCTOS YA COMPRADOS</h3>
+
+                <div class="table-responsive p-2">
+                    <table class="table table-striped table-hover table-bordered w-100 table-sm" id="ProductosComprados">
                     </table>
                 </div>
 

@@ -22,6 +22,12 @@ $router->get('/categorias/eliminar', [CategoriaController::class, 'eliminarAPI']
 
 //url's productos
 $router->get('/productos', [ProductoController::class, 'paginainicio']);
+$router->post('/productos/guardarAPI', [ProductoController::class, 'guardarAPI']);
+$router->get('/productos/buscarAPI', [ProductoController::class, 'buscarAPI']);
+$router->get('/productos/buscompraAPI', [ProductoController::class, 'buscompraAPI']);
+$router->post('/productos/modificarAPI', [ProductoController::class, 'modificarAPI']);
+$router->get('/productos/eliminar', [ProductoController::class, 'eliminarAPI']);
+$router->get('/productos/comprado', [ProductoController::class, 'compradoAPI']);
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

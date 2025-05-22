@@ -12,7 +12,8 @@ class Productos extends ActiveRecord
         'pro_cantidad',
         'pro_categoria',
         'pro_prioridad',
-        'pro_comprado'
+        'pro_comprado',
+        'pro_situacion'
     ];
     public static $idTabla = 'pro_id';
 
@@ -22,6 +23,7 @@ class Productos extends ActiveRecord
     public $pro_categoria;
     public $pro_prioridad;
     public $pro_comprado;
+    public $pro_situacion;
 
 
     public function __construct($args = []){
@@ -30,7 +32,22 @@ class Productos extends ActiveRecord
         $this->pro_cantidad = $args['pro_cantidad'] ?? '';
         $this->pro_categoria = $args['pro_categoria'] ?? '';
         $this->pro_prioridad = $args['pro_prioridad'] ?? ''; 
-        $this->pro_comprado = $args['pro_comprado'] ?? 1;   
+        $this->pro_comprado = $args['pro_comprado'] ?? 0;
+        $this->pro_situacion = $args['pro_situacion'] ?? 1;   
         
+    }
+
+
+    public static function EliminarProductos($id){
+
+        $sql = "UPDATE productos SET pro_situacion = 0 WHERE pro_id = $id";
+        return self::SQL($sql);
+    }
+
+
+    public static function ProductoComprado($id){
+
+        $sql = "UPDATE productos SET pro_comprado = 1 WHERE pro_id = $id";
+        return self::SQL($sql);
     }
 }

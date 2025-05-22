@@ -12,7 +12,8 @@ create table productos(
     pro_cantidad integer,
     pro_categoria integer,
     pro_prioridad integer,
-    pro_comprado smallint default 0
+    pro_comprado smallint default 0,
+    pro_situacion char(1)
 );
 
 alter table productos add constraint (foreign key(pro_categoria)

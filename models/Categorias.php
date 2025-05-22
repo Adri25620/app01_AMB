@@ -26,7 +26,7 @@ class Categorias extends ActiveRecord
 
     public static function EliminarCategorias($id){
 
-        $sql = "DELETE FROM categorias WHERE cat_id = $id";
+        $sql = "UPDATE categorias SET cat_situacion = 0 WHERE cat_id = $id";
 
         return self::SQL($sql);
     }
