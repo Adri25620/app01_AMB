@@ -204,8 +204,8 @@ const datatable = new DataTable('#TablaProductos', {
                          data-nombre="${row.pro_nombre}"
                          data-cantidad="${row.pro_cantidad}"
                          data-categoria="${row.pro_categoria}"
-                         data-prioridad="${row.pro_prioridad}"    
-                         <i class='bi bi-pencil-square me-1'></i> Modificar
+                         data-prioridad="${row.pro_prioridad}">    
+                         <i class="bi bi-pencil-square"></i> Modificar
                      </button>
                      <button class='btn btn-danger eliminar mx-1' 
                          data-id="${data}">

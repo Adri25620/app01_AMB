@@ -157,7 +157,7 @@ const datatable = new DataTable('#TablaCategorias', {
                  <div class='d-flex justify-content-center'>
                      <button class='btn btn-warning modificar mx-1' 
                          data-id="${data}" 
-                         data-nom="${row.cat_nom}"    
+                         data-nom="${row.cat_nom}">    
                          <i class='bi bi-pencil-square me-1'></i> Modificar
                      </button>
                      <button class='btn btn-danger eliminar mx-1' 
